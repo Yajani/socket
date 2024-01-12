@@ -5,7 +5,8 @@ import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.redis.connection.RedisServer;
+import redis.embedded.RedisServer;
+
 
 //local 환경에서만 실행되도록 설정
 //로컬 환경일 경우, 채팅 서버가 실행될 때 내장형 레디스(Embedded Redis)도 동시에 실행된다
@@ -32,9 +33,6 @@ public class EmbeddedRedisConfig {
             redisServer.stop();
         }
     }
-
-
-
 
 
 }
