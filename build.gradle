@@ -36,6 +36,8 @@ dependencies {
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 //	testImplementation 'it.ozimov:embedded-redis:0.7.2'
+	//jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 
