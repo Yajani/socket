@@ -49,6 +49,5 @@ public class MessageRoom {
         this.post = post;
     }
 
-    private class User {
-    }
+
 }

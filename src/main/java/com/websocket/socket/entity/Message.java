@@ -12,10 +12,10 @@ import java.sql.Timestamp;
 @Table(name = "message")
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Message extends Timestamp {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
 
     @Column(name = "sender")
     private String sender;
@@ -32,6 +32,7 @@ public class Message extends Timestamp {
     @Column(name = "sentTime")
     private String sentTime;
 
+    // 1.
     @ManyToOne
     @JoinColumn(name = "roomId", referencedColumnName = "roomId", insertable = false, updatable = false)
     private MessageRoom messageRoom;
