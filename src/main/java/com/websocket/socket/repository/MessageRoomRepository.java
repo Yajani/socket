@@ -16,4 +16,7 @@ public interface MessageRoomRepository extends JpaRepository<MessageRoom, Long> 
     MessageRoom findByRoomIdAndUserOrRoomIdAndReceiver(String roomId, User user, String roomId1, String nickname);
 
     MessageRoom findByRoomId(String roomId);
+
+    @Override
+    <S extends MessageRoom> S save(S entity);
 }

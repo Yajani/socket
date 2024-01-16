@@ -18,6 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,9 +57,7 @@ public class MessageRoomService {
 
     // 쪽지방 생성
     public MessageResponseDto createRoom(MessageRequestDto messageRequestDto, User user) {
-        Post post = postRepository.findById(messageRequestDto.getPostId()).orElseThrow(
-                () -> new IllegalArgumentException("게시글을 찾을 수 없습니다.")
-        );
+        Post post = new Post();
 
         // 4.
         MessageRoom messageRoom = messageRoomRepository.findBySenderAndReceiver(user.getNickname(), messageRequestDto.getReceiver());
@@ -93,7 +92,7 @@ public class MessageRoomService {
                         messageRoom.getReceiver());
 
                 // 8. 가장 최신 메시지 & 생성 시간 조회
-                Message latestMessage = messageRepository.findTopByRoomIdOrderByCreatedAtDesc(messageRoom.getRoomId());
+                Message latestMessage = (Message) messageRepository.findTopByRoomIdOrderByCreatedAtDesc(messageRoom.getRoomId());
                 if (latestMessage != null) {
                     messageRoomDto.setLatestMessageCreatedAt(latestMessage.getCreatedAt());
                     messageRoomDto.setLatestMessageContent(latestMessage.getMessage());
@@ -110,7 +109,7 @@ public class MessageRoomService {
                         messageRoom.getReceiver());
 
                 // 가장 최신 메시지 & 생성 시간 조회
-                MessageZ latestMessage = messageRepository.findTopByRoomIdOrderByCreatedAtDesc(messageRoom.getRoomId());
+                Message latestMessage = (Message) messageRepository.findTopByRoomIdOrderByCreatedAtDesc(messageRoom.getRoomId());
                 if (latestMessage != null) {
                     messageRoomDto.setLatestMessageCreatedAt(latestMessage.getCreatedAt());
                     messageRoomDto.setLatestMessageContent(latestMessage.getMessage());
@@ -127,15 +126,18 @@ public class MessageRoomService {
     public MessageRoomDto findRoom(String roomId, User user) {
         MessageRoom messageRoom = messageRoomRepository.findByRoomId(roomId);
 
-        // 게시글 조회
-        Post post = postRepository.findById(messageRoom.getPost().getId()).orElseThrow(
-                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
-        );
+//        // 게시글 조회
+//        Post post = postRepository.findById(messageRoom.getPost().getId()).orElseThrow(
+//                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+//        );
 
-        // 사용자 조회
-        User receiver = userRepository.findById(post.getUser().getId()).orElseThrow(
-                () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
-        );
+//        // 사용자 조회
+//        User receiver = userRepository.findById(post.getUser().getId()).orElseThrow(
+//                () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+//        );
+
+        Post post = new Post();
+        User receiver = new User();
 
         // 9. sender & receiver 모두 messageRoom 조회 가능
         messageRoom = messageRoomRepository.findByRoomIdAndUserOrRoomIdAndReceiver(roomId, user, roomId, receiver.getNickname());
@@ -151,15 +153,13 @@ public class MessageRoomService {
                 messageRoom.getReceiver());
 
         messageRoomDto.setMessageRoomPostId(post.getId());
-        messageRoomDto.setMessageRoomCategory(post.getCategory().getValue());		// getValue() : category 는 int 타입이었기 때문. 없다면 String 타입으로 반환됨
-        messageRoomDto.setMessageRoomCountry(post.getCountry());
         messageRoomDto.setMessageRoomTitle(post.getTitle());
 
         return messageRoomDto;
     }
 
     // 10. 쪽지방 삭제
-    public MsgResponseDto deleteRoom(Long id, User user) {
+    public MessageResponseDto deleteRoom(Long id, User user) {
         MessageRoom messageRoom = messageRoomRepository.findByIdAndUserOrIdAndReceiver(id, user, id, user.getNickname());
 
         // sender 가 삭제할 경우
@@ -172,7 +172,7 @@ public class MessageRoomService {
             messageRoomRepository.save(messageRoom);
         }
 
-        return new MsgResponseDto("쪽지방을 삭제했습니다.", HttpStatus.OK.value());
+        return new MessageResponseDto("쪽지방을 삭제했습니다.", HttpStatus.OK.value());
     }
 
     // 쪽지방 입장

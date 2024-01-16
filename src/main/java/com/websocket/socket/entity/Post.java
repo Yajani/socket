@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
+
+import java.util.Map;
 
 @Entity
 @Setter
@@ -14,11 +18,17 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PostId")
     private Long Id;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
 
     @Column(nullable = false, length = 2000)
     private String content;
+
+    @Column(nullable = false, length = 2000)
+    private String title;
 
 
 

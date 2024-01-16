@@ -7,6 +7,7 @@ import com.websocket.socket.dto.MessageResponseDto;
 import com.websocket.socket.dto.MessageRoomDto;
 import com.websocket.socket.service.MessageRoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

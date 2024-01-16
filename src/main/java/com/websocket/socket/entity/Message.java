@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -43,5 +44,11 @@ public class Message {
         this.sender = sender;
         this.roomId = roomId;
         this.message = message;
+    }
+
+    public LocalDateTime getCreatedAt() {
+
+
+        return null;
     }
 }

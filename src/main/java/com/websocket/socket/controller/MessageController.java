@@ -21,15 +21,10 @@ public class MessageController {
     private final MessageService messageService;
 
     // 대화 & 대화 저장
-    @MessageMapping("/message")     // 1.
+    @MessageMapping("/message")
     public void message(MessageDto messageDto) {
-        // 클라이언트의 쪽지방(topic) 입장, 대화를 위해 리스너와 연동
         messageRoomService.enterMessageRoom(messageDto.getRoomId());
-
-        // Websocket 에 발행된 메시지를 redis 로 발행. 해당 쪽지방을 구독한 클라이언트에게 메시지가 실시간 전송됨 (1:N, 1:1 에서 사용 가능)
         redisPublisher.publish(messageRoomService.getTopic(messageDto.getRoomId()), messageDto);
-
-        // DB & Redis 에 대화 저장
         messageService.saveMessage(messageDto);
     }
 

@@ -43,6 +43,9 @@ public class MessageResponseDto {
         this.roomId = roomId;
     }
 
+    public MessageResponseDto(String s, int value) {
+    }
+
     public void setLatestMessageContent(String message) {
         this.message = message;
     }

@@ -26,7 +26,7 @@ public class MessageService {
     // 대화 저장
     public void saveMessage(MessageDto messageDto) {
         // DB 저장
-        Message message = new Message(messageDto.getSender(), messageDto.getRoomId(), messageDto.getMessage());
+        org.apache.logging.log4j.message.Message message = (org.apache.logging.log4j.message.Message) new Message(messageDto.getSender(), messageDto.getRoomId(), messageDto.getMessage());
         messageRepository.save(message);
 
         // 1. 직렬화
@@ -49,10 +49,10 @@ public class MessageService {
         // 4. Redis 에서 가져온 메시지가 없다면, DB 에서 메시지 100개 가져오기
         if (redisMessageList == null || redisMessageList.isEmpty()) {
             // 5.
-            List<Message> dbMessageList = messageRepository.findTop100ByRoomIdOrderByCreatedAtAsc(roomId);
+            List<org.apache.logging.log4j.message.Message> dbMessageList = messageRepository.findTop100ByRoomIdOrderByCreatedAtAsc(roomId);
 
-            for (Message message : dbMessageList) {
-                MessageDto messageDto = new MessageDto(message);
+            for (org.apache.logging.log4j.message.Message message : dbMessageList) {
+                MessageDto messageDto = new MessageDto((com.websocket.socket.entity.Message) message);
                 messageList.add(messageDto);
                 redisTemplateMessage.setValueSerializer(new Jackson2JsonRedisSerializer<>(Message.class));      // 직렬화
                 redisTemplateMessage.opsForList().rightPush(roomId, messageDto);                                // redis 저장
