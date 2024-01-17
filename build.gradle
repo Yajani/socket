@@ -32,17 +32,21 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	//mongodb
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
 	//embedded-redis
-	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+//	implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+//	implementation('it.ozimov:embedded-redis:0.7.3') { exclude group: "org.slf4j", module: "slf4j-simple" }
 	// redis
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 //	testImplementation 'it.ozimov:embedded-redis:0.7.2'
 	//jpa
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //spring security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.security:spring-security-config'
-	implementation 'org.springframework.security:spring-security-web'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.security:spring-security-config'
+//	implementation 'org.springframework.security:spring-security-web'
 }
 
 
