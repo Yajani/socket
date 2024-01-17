@@ -1,5 +1,6 @@
 package com.websocket.socket.service;
 
+import com.websocket.socket.entity.User_mongo;
 import com.websocket.socket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,10 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public User_mongo saveUser(User_mongo user) {
+        return userRepository.save(user);
     }
 
 

@@ -2,7 +2,7 @@ package com.websocket.socket.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
